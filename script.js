@@ -17,6 +17,11 @@ function writePassword() {
 generateBtn.addEventListener("click", writePassword); P
 
 
+
+
+
+//----------------------------------------- added code starts------------------------------------
+
 function generatePassword() {
 
   // turn the userInputLength to a number
@@ -100,3 +105,4 @@ function getRandomSymbol() {
   return symbol[Math.floor(Math.random() * symbol.length)]
 }
 
+//-------------------------------added code ends---------------------------------------
