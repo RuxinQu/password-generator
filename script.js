@@ -96,7 +96,7 @@ function getRandomUpper() {
 
 //generate random special character
 function getRandomSymbol() {
-  const symbol = "!\"#$%&'()*+,-./:;<=>?@[\]^_'{|}~";
+  const symbol = '!"#$%&\'()*+,-./:;<=>?@[\]^_{|}~';
   return symbol[Math.floor(Math.random() * symbol.length)]
 }
 
