@@ -14,7 +14,7 @@ function writePassword() {
 }
 
 // Add event listener to generate button
-generateBtn.addEventListener("click", writePassword); P
+generateBtn.addEventListener("click", writePassword);
 
 
 
@@ -39,70 +39,69 @@ function generatePassword() {
     return '';
   }
 
-  
+
   let includeNum = confirm('Would you like to include numbers? (OK means Yes, cancel means No)');
   let includeLower = confirm('Would you like to include lowercase letters?');
   let includeUpper = confirm('Would you like to include uppercase letters?');
   let includeSymbol = confirm('Would you like to include special characters?');
 
   //  alert when no character type is selected
-  if(!includeNum && !includeLower && !includeUpper && !includeSymbol){
+  if (!includeNum && !includeLower && !includeUpper && !includeSymbol) {
     alert('You must select at least one character type!');
   }
 
+  
+  let passwordBuffer = [];
+  let types = [includeLower, includeUpper, includeNum, includeSymbol];
+  let typeLists = [lowerList, upperList, numList, symbolList]
 
- //loop the functions to add different types of characters.
-  let passwordBuffer=[];
 
-  /* loop the functions when the passwordBuffer.length is shorter than the userInputLength, 
-  and push the character into the passwordBuffer array.*/
-  while(passwordBuffer.length < userInputLength){
-
-    /* each if condition below has passwordBuffer.length < userInputLength, 
-    in case the passwordBuffer.length is less than userInputLength before the loop starts, 
-    but running the whole loop may let passwordBuffer.length exceed userInputLength.*/
-    if (includeNum && passwordBuffer.length < userInputLength){
-      passwordBuffer.push(getRandomNum())
+  // if the types[x] is true, push the corresponding list array to passwordBuffer
+  for (let x = 0; x < types.length; x++) {
+    if (types[x]) {
+      passwordBuffer = passwordBuffer.concat(typeLists[x]);
     };
+  };
 
-    if (includeLower && passwordBuffer.length < userInputLength){
-      passwordBuffer.push(getRandomLower())
-    };
 
-    if (includeUpper && passwordBuffer.length < userInputLength){
-      passwordBuffer.push(getRandomUpper())
-    };
+  let passwordResult = [];
 
-    if (includeSymbol && passwordBuffer.length < userInputLength){
-      passwordBuffer.push(getRandomSymbol())
-    };
-  }
+
+  //choose random index in passwordBuffer, and return the item to passwordResult
+  for (let x = 0; x < userInputLength; x++) {
+    let random = Math.floor(Math.random() * (passwordBuffer.length - 1))
+
+    passwordResult.push(passwordBuffer[random]);
+  };
+
 
   // join the items in the array a string
-  return passwordBuffer.join('');
+  return passwordResult.join('')
 };
 
 
 
-//generate random number
-function getRandomNum() {
-  return String.fromCharCode(Math.floor(Math.random() * 10) + 48);
-};
+//-------get number list-------
+// make each numbers appear twice, so the numList length(20) is close to the length of letter lists(26) and symbolList(30). 
+// so the possibility of getting a random number is close to getting other character type.
+let numList = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
 
-//generate random lowercase letter
-function getRandomLower() {
-  return String.fromCharCode(Math.floor(Math.random() * 26) + 97);
-};
 
-//generate random uppercase letter
-function getRandomUpper() {
-  return String.fromCharCode(Math.floor(Math.random() * 26) + 65);
-};
-
-//generate random special character
-function getRandomSymbol() {
-  const symbol = '!"#$%&\'()*+,-./:;<=>?@[\]^_{|}~';
-  return symbol[Math.floor(Math.random() * symbol.length)]
+//-------get lowercase letter list-------
+let lowerList = [];
+for (let x = 0; x < 26; x++) {
+  lowerList.push(String.fromCharCode(x + 97));
 }
+
+//-------get uppercase letter list--------
+let upperList = [];
+for (let x = 0; x < lowerList.length; x++) {
+  upperList[x] = lowerList[x].toUpperCase();
+}
+
+//-----------special character------------
+let symbol = '!"#$%&\'()*+,-./:;<=>?@[\]^_{|}~';
+let symbolList = symbol.split('');
+
 
 //-------------------------------added code ends---------------------------------------
