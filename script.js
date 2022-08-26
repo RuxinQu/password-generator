@@ -50,41 +50,65 @@ function generatePassword() {
     alert('You must select at least one character type!');
   }
 
-  
-  let passwordBuffer = [];
-  let types = [includeLower, includeUpper, includeNum, includeSymbol];
-  let typeLists = [lowerList, upperList, numList, symbolList]
 
+  let passwordBuffer = [];
+  let passwordResult = [];
+  let types = [includeNum, includeLower, includeUpper, includeSymbol];
+  let typeLists = [numList, lowerList, upperList, symbolList]
+  let countTypes = 0;
 
   // if the types[x] is true, push the corresponding list array to passwordBuffer
   for (let x = 0; x < types.length; x++) {
     if (types[x]) {
-      passwordBuffer = passwordBuffer.concat(typeLists[x]);
+      let selection = [];
+        countTypes++
+        passwordBuffer = passwordBuffer.concat(typeLists[x]);
+        selection = typeLists[x][Math.floor(Math.random() * (numList.length))];
+        passwordResult.push(selection);
     };
   };
 
 
-  let passwordResult = [];
+  // if (types[0]) {
+  //   var numSelection = numList[Math.floor(Math.random() * (numList.length))];
+  //   passwordResult.push(numSelection);
+  // }
+  // if (types[1]) {
+  //   var lowerSelection = lowerList[Math.floor(Math.random() * (lowerList.length))];
+  //   passwordResult.push(lowerSelection);
+  // }
+  // if (types[2]) {
+  //   var upperSelection = upperList[Math.floor(Math.random() * (upperList.length))];
+  //   passwordResult.push(upperSelection);
+  // }
+  // if (types[3]) {
+  //   var symbolSelection = symbolList[Math.floor(Math.random() * (symbolList.length))];
+  //   passwordResult.push(symbolSelection);
+  // }
 
+  //   var numSelection = numList[Math.floor(Math.random()* (numList.length))];
+  //  passwordResult.push(numSelection);
 
   //choose random index in passwordBuffer, and return the item to passwordResult
-  for (let x = 0; x < userInputLength; x++) {
+  let numNeeded = userInputLength - countTypes;
+  for (let x = 0; x < numNeeded; x++) {
     let random = Math.floor(Math.random() * (passwordBuffer.length - 1))
-
     passwordResult.push(passwordBuffer[random]);
   };
 
 
+  let shuffledPassword = passwordResult.sort(function () {
+    return Math.random() - 0.5;
+  });
+
   // join the items in the array a string
-  return passwordResult.join('')
+  return shuffledPassword.join('')
 };
 
 
 
 //-------get number list-------
-// make each numbers appear twice, so the numList length(20) is close to the length of letter lists(26) and symbolList(30). 
-// so the possibility of getting a random number is close to getting other character type.
-let numList = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+let numList = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
 
 
 //-------get lowercase letter list-------
