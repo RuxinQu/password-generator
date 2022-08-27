@@ -1,10 +1,19 @@
-// // Assignment code here
+/*====================================================================================================================
+                                         Description
+This code takes a input number as password length, and four booleans for whether or not to include nums, lowercase letters
+uppercase letters and special characters. 
 
+If one character type is selected, all the array elements in the selected types will be added to passwordBuffer; one 
+random element from this type will be added to passwordResult; then the rest of the password characters will be chosen 
+randomly from passwordBuffer.
 
-// // Get references to the #generate element
+PasswordResult will be shuffled before being returned, so the order is not pre-determined.
+====================================================================================================================*/
+
+// Get references to the #generate element
 var generateBtn = document.querySelector("#generate");
 
-// // Write password to the #password input
+// Write password to the #password input
 function writePassword() {
   var password = generatePassword();
   var passwordText = document.querySelector("#password");
@@ -17,16 +26,12 @@ function writePassword() {
 generateBtn.addEventListener("click", writePassword);
 
 
-
-
-
-//----------------------------------------- added code starts------------------------------------
+/*----------------------------------------- added code starts------------------------------------*/
 
 function generatePassword() {
 
   // turn the userInputLength to a number
   let userInputLength = parseInt(prompt('Enter a number for password length (between 8 to 128)'))
-
   //  filter out if the userInputLength is not a number
   if (isNaN(userInputLength)) {
     alert('Password must be a number!')
@@ -40,16 +45,11 @@ function generatePassword() {
   }
 
 
+  //four booleans from user input
   let includeNum = confirm('Would you like to include numbers? (OK means Yes, cancel means No)');
   let includeLower = confirm('Would you like to include lowercase letters?');
   let includeUpper = confirm('Would you like to include uppercase letters?');
   let includeSymbol = confirm('Would you like to include special characters?');
-
-  //  alert when no character type is selected
-  if (!includeNum && !includeLower && !includeUpper && !includeSymbol) {
-    alert('You must select at least one character type!');
-  }
-
 
   let passwordBuffer = [];
   let passwordResult = [];
@@ -57,46 +57,34 @@ function generatePassword() {
   let typeLists = [numList, lowerList, upperList, symbolList]
   let countTypes = 0;
 
-  // if the types[x] is true, push the corresponding list array to passwordBuffer
+
+  // alert when no character type is selected
+  if (!includeNum && !includeLower && !includeUpper && !includeSymbol) {
+    alert('You must select at least one character type!');
+  }
+
+  //loop through the types the user selected
   for (let x = 0; x < types.length; x++) {
+    /*if the type is selected, push the corresponding type list to the passwordBuffer, and push one character from the type list to passwordResult
+    so at least one character from the selected type will be included.*/
     if (types[x]) {
       let selection = [];
-        countTypes++
-        passwordBuffer = passwordBuffer.concat(typeLists[x]);
-        selection = typeLists[x][Math.floor(Math.random() * (numList.length))];
-        passwordResult.push(selection);
+      countTypes++
+      passwordBuffer = passwordBuffer.concat(typeLists[x]);
+      selection.push(typeLists[x][Math.floor(Math.random() * (typeLists[x].length))]);
+      passwordResult.push(selection);
     };
   };
 
 
-  // if (types[0]) {
-  //   var numSelection = numList[Math.floor(Math.random() * (numList.length))];
-  //   passwordResult.push(numSelection);
-  // }
-  // if (types[1]) {
-  //   var lowerSelection = lowerList[Math.floor(Math.random() * (lowerList.length))];
-  //   passwordResult.push(lowerSelection);
-  // }
-  // if (types[2]) {
-  //   var upperSelection = upperList[Math.floor(Math.random() * (upperList.length))];
-  //   passwordResult.push(upperSelection);
-  // }
-  // if (types[3]) {
-  //   var symbolSelection = symbolList[Math.floor(Math.random() * (symbolList.length))];
-  //   passwordResult.push(symbolSelection);
-  // }
-
-  //   var numSelection = numList[Math.floor(Math.random()* (numList.length))];
-  //  passwordResult.push(numSelection);
-
-  //choose random index in passwordBuffer, and return the item to passwordResult
+  //loop throught the passwordBuffer to push the rest characters
   let numNeeded = userInputLength - countTypes;
   for (let x = 0; x < numNeeded; x++) {
-    let random = Math.floor(Math.random() * (passwordBuffer.length - 1))
+    let random = Math.floor(Math.random() * (passwordBuffer.length))
     passwordResult.push(passwordBuffer[random]);
   };
 
-
+  //shuffle the result so the order is not pre-determined
   let shuffledPassword = passwordResult.sort(function () {
     return Math.random() - 0.5;
   });
@@ -124,8 +112,9 @@ for (let x = 0; x < lowerList.length; x++) {
 }
 
 //-----------special character------------
-let symbol = '!"#$%&\'()*+,-./:;<=>?@[\]^_{|}~';
-let symbolList = symbol.split('');
+let symbolList = [];
+for (let x = 0; x < 15; x++) {
+  symbolList.push(String.fromCharCode(x + 33));
+}
 
-
-//-------------------------------added code ends---------------------------------------
+/*-------------------------------added code ends---------------------------------------*/
